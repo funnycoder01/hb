@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, [Your Friend's Name]!</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;700&display=swap');
+
+        :root {
+            --primary-color: #ff6f61;
+            --secondary-color: #6a0572;
+            --text-color: #333;
+            --bg-color: #f7f3e9;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            overflow-x: hidden;
+            box-sizing: border-box;
+        }
+
+        #password-page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: var(--bg-color);
+            z-index: 2000;
+        }
+
+        #password-page h2 {
+            font-family: 'Pacifico', cursive;
+            color: var(--primary-color);
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        #password-page input {
+            padding: 10px;
+            font-size: 1.2em;
+            border: 2px solid var(--secondary-color);
+            border-radius: 8px;
+            text-align: center;
+            outline: none;
+            width: 250px;
+        }
+
+        #password-page button {
+            margin-top: 15px;
+            padding: 10px 25px;
+            font-size: 1.2em;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #password-page button:hover {
+            background-color: #4a0352;
+        }
+        
+        #main-content {
+            display: none;
+            width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .intro {
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .intro h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 3em;
+            color: var(--primary-color);
+            animation: fadeInDown 1.5s ease-out;
+            margin-bottom: 10px;
+        }
+
+        .intro p {
+            font-size: 1.2em;
+            color: var(--text-color);
+            animation: fadeInUp 1.5s ease-out;
+        }
+        
+        .gift-wrapper {
+            perspective: 1000px;
+            width: 200px;
+            height: 200px;
+            margin: 40px auto;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .gift-box {
+            position: relative;
+            width: 150px;
+            height: 120px;
+            background: linear-gradient(to bottom, #d62828, #e76f51);
+            border-radius: 8px;
+            margin: 0 auto;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease;
+        }
+
+        .gift-lid {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 170px;
+            height: 40px;
+            background: linear-gradient(to bottom, #ff9f1c, #ffbf69);
+            border-radius: 8px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            transform-origin: bottom center;
+            transition: transform 0.5s ease-in-out;
+            z-index: 1;
+        }
+        
+        .gift-ribbon-vertical, .gift-ribbon-horizontal {
+            position: absolute;
+            background-color: #f7b32b;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .gift-ribbon-vertical {
+            width: 30px;
+            height: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .gift-ribbon-horizontal {
+            width: 100%;
+            height: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .gift-lid .gift-ribbon-horizontal {
+            width: 100%;
+            height: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .gift-wrapper.unwrapped .gift-lid {
+            transform: translateX(-50%) translateY(-100px) rotateX(60deg) scale(0.8);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f1c40f;
+            border-radius: 50%;
+            animation: confetti-fall 2s forwards;
+            opacity: 0;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(0) rotate(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(500px) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .intro h1 {
+                font-size: 2.5em;
+            }
+            .intro p {
+                font-size: 1em;
+            }
+            .gift-wrapper {
+                width: 180px;
+                height: 180px;
+            }
+            .gift-box {
+                width: 130px;
+                height: 100px;
+            }
+            .gift-lid {
+                width: 150px;
+                height: 35px;
+                top: -20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="password-page">
+        <h2>Enter the Secret Password</h2>
+        <input type="password" id="password-input" placeholder="Password">
+        <button onclick="checkPassword()">Enter</button>
+    </div>
+
+    <div id="main-content">
+        <div class="intro">
+            <h1>Happy Birthday, [Your Friend's Name]! 🎉</h1>
+            <p>This is a small gift from me to you. Click on the gift to reveal a surprise!</p>
+        </div>
+
+        <div class="gift-wrapper" id="gift-wrapper">
+            <div class="gift-box">
+                <div class="gift-ribbon-vertical"></div>
+                <div class="gift-ribbon-horizontal"></div>
+            </div>
+            <div class="gift-lid">
+                <div class="gift-ribbon-horizontal"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const correctPassword = "1234"; // <-- CHANGE THIS TO YOUR DESIRED PASSWORD
+        
+        function checkPassword() {
+            const passwordInput = document.getElementById('password-input').value;
+            if (passwordInput === correctPassword) {
+                document.getElementById('password-page').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+            } else {
+                alert("Incorrect password. Please try again.");
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const giftWrapper = document.getElementById('gift-wrapper');
+
+            giftWrapper.addEventListener('click', () => {
+                giftWrapper.classList.add('unwrapped');
+                generateConfetti();
+                
+                setTimeout(() => {
+                    window.location.href = 'cards.html'; // Redirects to the new page
+                }, 1000);
+            });
+
+            function generateConfetti() {
+                const colors = ['#ff6f61', '#f7b32b', '#6a0572', '#2ecc71', '#9b59b6'];
+                for (let i = 0; i < 50; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.classList.add('confetti');
+                    const giftRect = giftWrapper.getBoundingClientRect();
+                    confetti.style.left = `${giftRect.left + giftRect.width / 2 + (Math.random() - 0.5) * giftRect.width * 2}px`;
+                    confetti.style.top = `${giftRect.top + giftRect.height / 2 + (Math.random() - 0.5) * giftRect.height * 2}px`;
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = `${Math.random() * 0.8}s`;
+                    confetti.style.animationDuration = `${1.5 + Math.random() * 1}s`;
+                    document.body.appendChild(confetti);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+

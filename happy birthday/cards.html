@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, [Your Friend's Name]! - The Surprise</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;700&display=swap');
+
+        :root {
+            --primary-color: #ff6f61;
+            --secondary-color: #6a0572;
+            --text-color: #333;
+            --bg-color: #f7f3e9;
+            --card-bg: #fff;
+            --card-border: #ddd;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .intro {
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .intro h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 3em;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .intro p {
+            font-size: 1.2em;
+            color: var(--text-color);
+        }
+        
+        .banner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 40px;
+            max-width: 90%;
+            gap: 15px;
+        }
+
+        .banner-line {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .letter-card {
+            width: 100px;
+            height: 130px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Pacifico', cursive;
+            font-size: 2.2em;
+            color: var(--secondary-color);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        
+        .letter-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .letter-card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+        }
+
+        .card-front {
+            background-color: var(--card-bg);
+            color: var(--secondary-color);
+            font-size: 2.2em;
+            font-family: 'Pacifico', cursive;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--card-border);
+        }
+
+        .card-back {
+            background-color: var(--card-bg);
+            transform: rotateY(180deg);
+            border: 1px solid var(--card-border);
+        }
+
+        .card-back img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .intro h1 {
+                font-size: 2em;
+            }
+            .intro p {
+                font-size: 1em;
+            }
+            .letter-card {
+                width: 80px;
+                height: 100px;
+                font-size: 1.8em;
+            }
+            .banner-line {
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="intro">
+        <h1>Happy Birthday, [Your Friend's Name]!</h1>
+        <p>hint💡: try flipping cards</p>
+    </div>
+
+    <div class="banner" id="banner"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const banner = document.getElementById('banner');
+
+            const photos = [
+                './images/H.JPG',
+                './images/A.JPG',
+                './images/P1.JPG',
+                './images/P2.JPG',
+                './images/Y.JPG',
+                './images/B.jpg',
+                './images/I.jpg',
+                './images/R.jpg',
+                './images/T.jpg',
+                './images/H2.jpg',
+                './images/D.jpg',
+                './images/A2.jpg',
+                './images/Y2.jpg'
+            ];
+
+            const bannerText = "HAPPY BIRTHDAY";
+
+            // Create line for HAPPY
+            const happyLine = document.createElement('div');
+            happyLine.classList.add('banner-line');
+            for (let i = 0; i < 5; i++) {
+                createLetterCard(bannerText[i], photos[i], happyLine);
+            }
+            banner.appendChild(happyLine);
+
+            // Create line for BIRTHDAY
+            const birthdayLine = document.createElement('div');
+            birthdayLine.classList.add('banner-line');
+            for (let i = 6; i < bannerText.length; i++) {
+                createLetterCard(bannerText[i], photos[i-1], birthdayLine);
+            }
+            banner.appendChild(birthdayLine);
+
+            function createLetterCard(letter, photoSrc, parentElement) {
+                const card = document.createElement('div');
+                card.classList.add('letter-card');
+
+                const cardFront = document.createElement('div');
+                cardFront.classList.add('card-face', 'card-front');
+                cardFront.textContent = letter;
+
+                const cardBack = document.createElement('div');
+                cardBack.classList.add('card-face', 'card-back');
+                const img = document.createElement('img');
+                img.src = photoSrc;
+                img.alt = `Photo for letter ${letter}`;
+                cardBack.appendChild(img);
+
+                card.appendChild(cardFront);
+                card.appendChild(cardBack);
+
+                card.addEventListener('click', () => {
+                    card.classList.toggle('flipped');
+                });
+                parentElement.appendChild(card);
+            }
+        });
+    </script>
+</body>
+</html>
